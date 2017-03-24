@@ -95,11 +95,13 @@
 <meta property="og:site_name" content="Brandlee's Playground">
 <meta property="og:description" content="Android事件传递机制，你想知道的，这里都有
 没有你告诉我，我加">
-<meta property="og:updated_time" content="2017-03-24T02:19:52.000Z">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/006tKfTcly1fdxxznxlkzj31060n8tbd.jpg">
+<meta property="og:updated_time" content="2017-03-24T07:26:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android事件传递机制">
 <meta name="twitter:description" content="Android事件传递机制，你想知道的，这里都有
 没有你告诉我，我加">
+<meta name="twitter:image" content="https://ww3.sinaimg.cn/large/006tKfTcly1fdxxznxlkzj31060n8tbd.jpg">
 
 
 
@@ -342,15 +344,12 @@
 <ul>
 <li><p>分发(Dispatch)</p>
 <p>方法：<code>public boolean dispatchTouchEvent(MotionEvent ev)</code></p>
-<p>返回值：</p>
 </li>
 <li><p>拦截(Intercept)</p>
 <p>方法：<code>public boolean onInterceptTouchEvent(MotionEvent ev)</code></p>
-<p>返回值：</p>
 </li>
 <li><p>消费(Consume)</p>
 <p>方法：<code>public boolean onTouchEvent(MotionEvent event)</code></p>
-<p>返回值：</p>
 </li>
 </ul>
 <p>Android中拥有事件处理能力的类有3种：</p>
@@ -384,6 +383,19 @@
 </tr>
 </tbody>
 </table>
+<p>正常状态下事件传递机制如下图：</p>
+<p><img src="https://ww3.sinaimg.cn/large/006tKfTcly1fdxxznxlkzj31060n8tbd.jpg" alt="ViewDispatch_1"></p>
+<p>关于上图有几点说明：</p>
+<ul>
+<li><p><strong><code>dispatchTouchEvent</code> 和 <code>onTouchEvent</code> 一旦return true,事件就停止传递了；</strong></p>
+</li>
+<li><p><strong><code>dispatchTouchEvent</code> 和 <code>onTouchEvent</code> return false的时候事件都回传给父控件的<code>onTouchEvent</code>处理。</strong></p>
+<p><code>dispatchTouchEvent</code> 返回值为 false,意味着<strong>事件停止往子View分发，并往父控件回溯</strong>。</p>
+<p><code>onTouchEvent</code> 返回值为 false,意味着<strong>不消费事件，并往父控件回溯</strong>。</p>
+</li>
+<li><p>​</p>
+</li>
+</ul>
 
       
     </div>
