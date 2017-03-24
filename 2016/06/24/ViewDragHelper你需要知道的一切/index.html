@@ -1,0 +1,789 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,View," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="ViewDragHelper is a utility class for writing custom ViewGroups. It offers a number of useful operations and state tracking for allowing a user to drag and reposition views within their parent ViewGr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ViewDragHelper你需要知道的一切">
+<meta property="og:url" content="http://yoursite.com/2016/06/24/ViewDragHelper你需要知道的一切/index.html">
+<meta property="og:site_name" content="Brandlee's Playground">
+<meta property="og:description" content="ViewDragHelper is a utility class for writing custom ViewGroups. It offers a number of useful operations and state tracking for allowing a user to drag and reposition views within their parent ViewGr">
+<meta property="og:updated_time" content="2017-03-20T02:56:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ViewDragHelper你需要知道的一切">
+<meta name="twitter:description" content="ViewDragHelper is a utility class for writing custom ViewGroups. It offers a number of useful operations and state tracking for allowing a user to drag and reposition views within their parent ViewGr">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/24/ViewDragHelper你需要知道的一切/"/>
+
+
+
+
+
+  <title> ViewDragHelper你需要知道的一切 | Brandlee's Playground </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Brandlee's Playground</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Dream Epic</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/24/ViewDragHelper你需要知道的一切/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Brand Lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brandlee's Playground">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ViewDragHelper你需要知道的一切
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-24T10:17:06+08:00">
+                2016-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/24/ViewDragHelper你需要知道的一切/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/24/ViewDragHelper你需要知道的一切/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>ViewDragHelper is a utility class for writing custom ViewGroups. It offers a number of useful operations and state tracking for allowing a user to drag and reposition views within their parent ViewGroup.</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/46858663" target="_blank" rel="external"><strong>Android ViewDragHelper完全解析 自定义ViewGroup神器</strong></a></li>
+<li><a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/0911/1680.html" target="_blank" rel="external"><strong>ViewDragHelper详解</strong></a></li>
+<li><a href="https://github.com/wangjia55/ViewDragHelper" target="_blank" rel="external"><strong>一个详细的示例</strong></a>，汇聚多个丰富多彩的Demo，让你从浅入深学会如何使用ViewDragHelper</li>
+</ul>
+<h2 id="几点说明"><a href="#几点说明" class="headerlink" title="几点说明"></a>几点说明</h2><ul>
+<li><code>ViewDragHelper.Callback</code>是连接ViewDragHelper与view之间的桥梁（这个view一般是指拥子view的容器即parentView）；</li>
+<li>ViewDragHelper的实例是通过静态工厂方法创建的；</li>
+<li>能够指定拖动的方向；</li>
+<li>ViewDragHelper可以检测到是否触及到边缘；</li>
+<li>ViewDragHelper并不是直接作用于要被拖动的View，而是使其控制的视图容器中的子View可以被拖动，如果要指定某个子view的行为，需要在Callback中想办法；</li>
+<li>ViewDragHelper的本质其实是分析<code>onInterceptTouchEvent</code>和<code>onTouchEvent</code>的MotionEvent参数，然后根据分析的结果去改变一个容器中被拖动子View的位置（ 通过offsetTopAndBottom(int offset)和offsetLeftAndRight(int offset)方法 ），他能在触摸的时候判断当前拖动的是哪个子View；</li>
+</ul>
+<h2 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h2><h3 id="自定义ViewGroup"><a href="#自定义ViewGroup" class="headerlink" title="自定义ViewGroup"></a>自定义ViewGroup</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VDHLayout</span> <span class="keyword">extends</span> <span class="title">FrameLayout</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> ViewDragHelper dragHelper;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VDHLayout</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VDHLayout</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VDHLayout</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">        dragHelper = ViewDragHelper.create(<span class="keyword">this</span>, <span class="number">1.0f</span>, <span class="keyword">new</span> DragHelperCallback());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">DragHelperCallback</span> <span class="keyword">extends</span> <span class="title">ViewDragHelper</span>.<span class="title">Callback</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">tryCaptureView</span><span class="params">(View child, <span class="keyword">int</span> pointerId)</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clampViewPositionHorizontal</span><span class="params">(View child, <span class="keyword">int</span> left, <span class="keyword">int</span> dx)</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.clampViewPositionHorizontal(child, left, dx);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clampViewPositionVertical</span><span class="params">(View child, <span class="keyword">int</span> top, <span class="keyword">int</span> dy)</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.clampViewPositionVertical(child, top, dy);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> dragHelper.shouldInterceptTouchEvent(ev);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">        dragHelper.processTouchEvent(event);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>自定义ViewGroup分为了3个步骤：</p>
+<ul>
+<li>创建ViewDragHelper实例:</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dragHelper = ViewDragHelper.create(<span class="keyword">this</span>, <span class="number">1.0f</span>, <span class="keyword">new</span> DragHelperCallback());</div></pre></td></tr></table></figure>
+<p>可以看到创建实例需要3个参数：当前的ViewGroup，sensitivity和ViewDragHelper.Callback。其中sensitivity主要适用于设置touchSlop，sensitivity越大，touchSlop越小：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">helper.mTouchSlop = (<span class="keyword">int</span>) (helper.mTouchSlop * (<span class="number">1</span> / sensitivity));</div></pre></td></tr></table></figure>
+<ul>
+<li>触摸相关方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> dragHelper.shouldInterceptTouchEvent(ev);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">    dragHelper.processTouchEvent(event);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>onInterceptTouchEvent</code>中通过使用<code>mDragger.shouldInterceptTouchEvent(event)</code>来决定我们是否应该拦截当前的事件。<br><code>onTouchEvent</code>中通过<code>mDragger.processTouchEvent(event)</code>处理事件。</p>
+<ul>
+<li>实现ViewDragHelper.Callback相关方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DragHelperCallback</span> <span class="keyword">extends</span> <span class="title">ViewDragHelper</span>.<span class="title">Callback</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">tryCaptureView</span><span class="params">(View child, <span class="keyword">int</span> pointerId)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clampViewPositionHorizontal</span><span class="params">(View child, <span class="keyword">int</span> left, <span class="keyword">int</span> dx)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.clampViewPositionHorizontal(child, left, dx);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clampViewPositionVertical</span><span class="params">(View child, <span class="keyword">int</span> top, <span class="keyword">int</span> dy)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.clampViewPositionVertical(child, top, dy);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意callback中复写的3个方法：<br><code>tryCaptureView</code>:返回ture则表示可以捕获该view，可根据传入的view参数决定哪些可以捕获<br><code>clampViewPositionHorizontal</code>和<code>clampViewPositionVertical</code>:对child移动的边界进行控制,<code>left</code> , <code>top</code> 分别为即将移动到的位置。</p>
+<p><strong>注</strong>：使View在ViewGroup内移动：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clampViewPositionHorizontal</span><span class="params">(View child, <span class="keyword">int</span> left, <span class="keyword">int</span> dx)</span> </span>&#123;</div><div class="line">   <span class="keyword">final</span> <span class="keyword">int</span> leftBound = getPaddingLeft();</div><div class="line">   <span class="keyword">final</span> <span class="keyword">int</span> rightBound = getWidth() - mDragView.getWidth() - getPaddingRight();</div><div class="line">   <span class="keyword">final</span> <span class="keyword">int</span> newLeft = Math.min(Math.max(left, leftBound), rightBound);</div><div class="line">   <span class="keyword">return</span> newLeft;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="功能展示"><a href="#功能展示" class="headerlink" title="功能展示"></a>功能展示</h3><p>ViewDragHelper能做的可不仅仅是拖动view，除此之外，他还能做以下的一些操作：</p>
+<ul>
+<li>边界检测、加速度检测<br>边界检测时,首先记得添加<code>dragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);</code>,重写<code>onEdgeDragStarted</code>方法，在方法中可以绕过<code>tryCaptureView</code>,主动通过<code>captureChildView</code>对其进行捕获,</li>
+<li>回调Drag Release</li>
+<li>移动到某个指定的位置</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">dragHelper.settleCapturedViewAt(mAutoBackOriginPos.x, mAutoBackOriginPos.y);</div><div class="line">invalidate();</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">computeScroll</span><span class="params">()</span> </span>&#123;</div><div class="line">   <span class="keyword">if</span> (dragHelper.continueSettling(<span class="keyword">true</span>)) &#123;</div><div class="line">       invalidate();</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>移动到指定位置注意调用<code>settleCapturedViewAt</code>方法，紧接着<code>invalidate();</code>,配合<code>computeScroll()</code>使用。</p>
+<p>修改之后的VHDLayout:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VDHLayout</span> <span class="keyword">extends</span> <span class="title">LinearLayout</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> ViewDragHelper dragHelper;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> View mDragView;</div><div class="line">    <span class="keyword">private</span> View mAutoBackView;</div><div class="line">    <span class="keyword">private</span> View mEdgeTrackerView;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Point mAutoBackOriginPos = <span class="keyword">new</span> Point();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VDHLayout</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VDHLayout</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VDHLayout</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">        dragHelper = ViewDragHelper.create(<span class="keyword">this</span>, <span class="number">1.0f</span>, <span class="keyword">new</span> DragHelperCallback());</div><div class="line">        dragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">DragHelperCallback</span> <span class="keyword">extends</span> <span class="title">ViewDragHelper</span>.<span class="title">Callback</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">tryCaptureView</span><span class="params">(View child, <span class="keyword">int</span> pointerId)</span> </span>&#123;</div><div class="line">            <span class="comment">//mEdgeTrackerView禁止直接移动</span></div><div class="line">            <span class="keyword">return</span> child == mDragView || child == mAutoBackView;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clampViewPositionHorizontal</span><span class="params">(View child, <span class="keyword">int</span> left, <span class="keyword">int</span> dx)</span> </span>&#123;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> leftBound = getPaddingLeft();</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> rightBound = getWidth() - mDragView.getWidth() - getPaddingRight();</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> newLeft = Math.min(Math.max(left, leftBound), rightBound);</div><div class="line">            <span class="keyword">return</span> newLeft;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clampViewPositionVertical</span><span class="params">(View child, <span class="keyword">int</span> top, <span class="keyword">int</span> dy)</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> top;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onViewReleased</span><span class="params">(View releasedChild, <span class="keyword">float</span> xvel, <span class="keyword">float</span> yvel)</span> </span>&#123;</div><div class="line">            <span class="comment">//mAutoBackView手指释放时可以自动回去</span></div><div class="line">            <span class="keyword">if</span> (releasedChild == mAutoBackView) &#123;</div><div class="line">                dragHelper.settleCapturedViewAt(mAutoBackOriginPos.x, mAutoBackOriginPos.y);</div><div class="line">                invalidate();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEdgeDragStarted</span><span class="params">(<span class="keyword">int</span> edgeFlags, <span class="keyword">int</span> pointerId)</span> </span>&#123;</div><div class="line">            dragHelper.captureChildView(mEdgeTrackerView, pointerId);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">computeScroll</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (dragHelper.continueSettling(<span class="keyword">true</span>)) &#123;</div><div class="line">            invalidate();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> dragHelper.shouldInterceptTouchEvent(ev);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">        dragHelper.processTouchEvent(event);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLayout</span><span class="params">(<span class="keyword">boolean</span> changed, <span class="keyword">int</span> l, <span class="keyword">int</span> t, <span class="keyword">int</span> r, <span class="keyword">int</span> b)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onLayout(changed, l, t, r, b);</div><div class="line"></div><div class="line">        mAutoBackOriginPos.x = mAutoBackView.getLeft();</div><div class="line">        mAutoBackOriginPos.y = mAutoBackView.getTop();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onFinishInflate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onFinishInflate();</div><div class="line"></div><div class="line">        mDragView = getChildAt(<span class="number">0</span>);</div><div class="line">        mAutoBackView = getChildAt(<span class="number">1</span>);</div><div class="line">        mEdgeTrackerView = getChildAt(<span class="number">2</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="效果演示"><a href="#效果演示" class="headerlink" title="效果演示"></a>效果演示</h3><h3 id="冲突事件处理"><a href="#冲突事件处理" class="headerlink" title="冲突事件处理"></a>冲突事件处理</h3><ul>
+<li>当子View不消耗点击事件的时候，整个手势操作会直接进入onTouchEvent，然后会调用<code>dragHelper.processTouchEvent(event);</code>来进行拖动操作的处理</li>
+<li>当子View消耗点击事件的时候，则会先走<code>onInterceptTouchEvent</code>方法，判断能否捕获，这个过程取决于另外两个回调方法：<code>getViewHorizontalDragRange</code>,<code>getViewVerticalDragRange</code>,因此，如果Button和设置了clickable=true的View的时候，记得重写两个方法，如下：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getViewHorizontalDragRange</span><span class="params">(View child)</span> </span>&#123;</div><div class="line">     <span class="keyword">return</span> getMeasuredWidth() - child.getMeasuredWidth();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getViewVerticalDragRange</span><span class="params">(View child)</span> </span>&#123;</div><div class="line">     <span class="keyword">return</span> getMeasuredHeight() - child.getMeasuredHeight();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><h3 id="ViewDragHelper实例的创建"><a href="#ViewDragHelper实例的创建" class="headerlink" title="ViewDragHelper实例的创建"></a>ViewDragHelper实例的创建</h3><p>ViewDragHelper重载了两个create()静态方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">  * Factory method to create a new ViewDragHelper.</div><div class="line">  *</div><div class="line">  * <span class="doctag">@param</span> forParent Parent view to monitor</div><div class="line">  *                  自定义的ViewGroup</div><div class="line">  * <span class="doctag">@param</span> cb Callback to provide information and receive events</div><div class="line">  *           控制子View拖拽需要的回调对象</div><div class="line">  * <span class="doctag">@return</span> a new ViewDragHelper instance</div><div class="line">  */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewDragHelper <span class="title">create</span><span class="params">(ViewGroup forParent, Callback cb)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ViewDragHelper(forParent.getContext(), forParent, cb);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">  * Factory method to create a new ViewDragHelper.</div><div class="line">  *</div><div class="line">  * <span class="doctag">@param</span> forParent Parent view to monitor</div><div class="line">  * <span class="doctag">@param</span> sensitivity Multiplier for how sensitive the helper should be about detecting</div><div class="line">  *                    the start of a drag. Larger values are more sensitive. 1.0f is normal.</div><div class="line">  * <span class="doctag">@param</span> cb Callback to provide information and receive events</div><div class="line">  * <span class="doctag">@return</span> a new ViewDragHelper instance</div><div class="line">  */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewDragHelper <span class="title">create</span><span class="params">(ViewGroup forParent, <span class="keyword">float</span> sensitivity, Callback cb)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> ViewDragHelper helper = create(forParent, cb);</div><div class="line">    helper.mTouchSlop = (<span class="keyword">int</span>) (helper.mTouchSlop * (<span class="number">1</span> / sensitivity));</div><div class="line">    <span class="keyword">return</span> helper;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>create()直接调用了ViewDragHelper唯一的私有构造方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">  * Apps should use ViewDragHelper.create() to get a new instance.</div><div class="line">  * This will allow VDH to use internal compatibility implementations for different</div><div class="line">  * platform versions.</div><div class="line">  *</div><div class="line">  * <span class="doctag">@param</span> context Context to initialize config-dependent params from</div><div class="line">  * <span class="doctag">@param</span> forParent Parent view to monitor</div><div class="line">  */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">ViewDragHelper</span><span class="params">(Context context, ViewGroup forParent, Callback cb)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (forParent == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Parent view may not be null"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (cb == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Callback may not be null"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    mParentView = forParent;</div><div class="line">    mCallback = cb;</div><div class="line"></div><div class="line">    <span class="comment">// ViewConfiguration类里定义了View相关的一系列时间、大小、距离等常量</span></div><div class="line">    <span class="keyword">final</span> ViewConfiguration vc = ViewConfiguration.get(context);</div><div class="line">    <span class="keyword">final</span> <span class="keyword">float</span> density = context.getResources().getDisplayMetrics().density;</div><div class="line">    <span class="comment">// 边缘触摸的范围</span></div><div class="line">    mEdgeSize = (<span class="keyword">int</span>) (EDGE_SIZE * density + <span class="number">0.5f</span>);</div><div class="line">    <span class="comment">// 系统所能识别出的可以被认为是滑动的最小距离</span></div><div class="line">    mTouchSlop = vc.getScaledTouchSlop();</div><div class="line">    <span class="comment">// fling时的最大速率，单位像素每秒</span></div><div class="line">    mMaxVelocity = vc.getScaledMaximumFlingVelocity();</div><div class="line">    <span class="comment">// fling时的最小速率</span></div><div class="line">    mMinVelocity = vc.getScaledMinimumFlingVelocity();</div><div class="line">    <span class="comment">// mScroller : View滚动的辅助类</span></div><div class="line">    mScroller = ScrollerCompat.create(context, sInterpolator);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="对Touch事件的处理"><a href="#对Touch事件的处理" class="headerlink" title="对Touch事件的处理"></a>对Touch事件的处理</h3><p>当<code>mParentView</code>（自定义ViewGroup）被触摸时，首先会调用mParentView的<code>onInterceptTouchEvent(MotionEvent ev)</code>， 接着就调用<code>shouldInterceptTouchEvent(MotionEvent ev)</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">  * Check if this event as provided to the parent view's onInterceptTouchEvent should</div><div class="line">  * cause the parent to intercept the touch event stream.</div><div class="line">  *</div><div class="line">  * <span class="doctag">@param</span> ev MotionEvent provided to onInterceptTouchEvent</div><div class="line">  * <span class="doctag">@return</span> true if the parent view should return true from onInterceptTouchEvent</div><div class="line">  */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldInterceptTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> action = MotionEventCompat.getActionMasked(ev);</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> actionIndex = MotionEventCompat.getActionIndex(ev);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (action == MotionEvent.ACTION_DOWN) &#123;</div><div class="line">        <span class="comment">// Reset things for a new event stream, just in case we didn't get</span></div><div class="line">        <span class="comment">// the whole previous stream.</span></div><div class="line">        cancel();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (mVelocityTracker == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="comment">// mVelocityTracker记录下的是本次ACTION_DOWN事件直至ACTION_UP事件发生后 （下次ACTION_DOWN事件发生前）的所有触摸点的信息</span></div><div class="line">        mVelocityTracker = VelocityTracker.obtain();</div><div class="line">    &#125;</div><div class="line">    mVelocityTracker.addMovement(ev);</div><div class="line"></div><div class="line">    <span class="keyword">switch</span> (action) &#123;</div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_DOWN: &#123;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">float</span> x = ev.getX();</div><div class="line">            <span class="keyword">final</span> <span class="keyword">float</span> y = ev.getY();</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> pointerId = MotionEventCompat.getPointerId(ev, <span class="number">0</span>);</div><div class="line">            <span class="comment">// 保存手势的初始信息</span></div><div class="line">            saveInitialMotion(x, y, pointerId);</div><div class="line">            <span class="comment">// 调用findTopChildUnder((int) x, (int) y); 来获取当前触摸点下最顶层的子View</span></div><div class="line">            <span class="keyword">final</span> View toCapture = findTopChildUnder((<span class="keyword">int</span>) x, (<span class="keyword">int</span>) y);</div><div class="line"></div><div class="line">            <span class="comment">// Catch a settling view if possible.</span></div><div class="line">            <span class="comment">// mDragState共有三种取值:</span></div><div class="line">            <span class="comment">// STATE_IDLE：所有的View处于静止空闲状态</span></div><div class="line">            <span class="comment">// STATE_DRAGGING：某个View正在被用户拖动（用户正在与设备交互）</span></div><div class="line">            <span class="comment">// STATE_SETTLING：某个View正在安置状态中（用户并没有交互操作），就是自动滚动的过程中</span></div><div class="line">            <span class="keyword">if</span> (toCapture == mCapturedView &amp;&amp; mDragState == STATE_SETTLING) &#123;</div><div class="line">                tryCaptureViewForDrag(toCapture, pointerId);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// 向外部通知mParentView的某些边缘被触摸到了，mInitialEdgesTouched是在刚才调</span></div><div class="line">            <span class="comment">// 用过的saveInitialMotion方法里进行赋值的</span></div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> edgesTouched = mInitialEdgesTouched[pointerId];</div><div class="line">            <span class="keyword">if</span> ((edgesTouched &amp; mTrackingEdges) != <span class="number">0</span>) &#123;</div><div class="line">                mCallback.onEdgeTouched(edgesTouched &amp; mTrackingEdges, pointerId);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> MotionEventCompat.ACTION_POINTER_DOWN: &#123;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> pointerId = MotionEventCompat.getPointerId(ev, actionIndex);</div><div class="line">            <span class="keyword">final</span> <span class="keyword">float</span> x = MotionEventCompat.getX(ev, actionIndex);</div><div class="line">            <span class="keyword">final</span> <span class="keyword">float</span> y = MotionEventCompat.getY(ev, actionIndex);</div><div class="line">            </div><div class="line">            saveInitialMotion(x, y, pointerId);</div><div class="line"></div><div class="line">            <span class="comment">// A ViewDragHelper can only manipulate one view at a time.</span></div><div class="line">            <span class="keyword">if</span> (mDragState == STATE_IDLE) &#123;</div><div class="line">                <span class="keyword">final</span> <span class="keyword">int</span> edgesTouched = mInitialEdgesTouched[pointerId];</div><div class="line">                <span class="keyword">if</span> ((edgesTouched &amp; mTrackingEdges) != <span class="number">0</span>) &#123;</div><div class="line">                    mCallback.onEdgeTouched(edgesTouched &amp; mTrackingEdges, pointerId);</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mDragState == STATE_SETTLING) &#123;</div><div class="line">                <span class="comment">// Catch a settling view if possible.</span></div><div class="line">                <span class="keyword">final</span> View toCapture = findTopChildUnder((<span class="keyword">int</span>) x, (<span class="keyword">int</span>) y);</div><div class="line">                <span class="keyword">if</span> (toCapture == mCapturedView) &#123;</div><div class="line">                    tryCaptureViewForDrag(toCapture, pointerId);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_MOVE: &#123;</div><div class="line">            <span class="comment">// First to cross a touch slop over a draggable view wins. Also report edge drags.</span></div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> pointerCount = MotionEventCompat.getPointerCount(ev);</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pointerCount; i++) &#123;</div><div class="line">                <span class="keyword">final</span> <span class="keyword">int</span> pointerId = MotionEventCompat.getPointerId(ev, i);</div><div class="line">                <span class="keyword">final</span> <span class="keyword">float</span> x = MotionEventCompat.getX(ev, i);</div><div class="line">                <span class="keyword">final</span> <span class="keyword">float</span> y = MotionEventCompat.getY(ev, i);</div><div class="line">                <span class="keyword">final</span> <span class="keyword">float</span> dx = x - mInitialMotionX[pointerId];</div><div class="line">                <span class="keyword">final</span> <span class="keyword">float</span> dy = y - mInitialMotionY[pointerId];</div><div class="line"></div><div class="line">                <span class="keyword">final</span> View toCapture = findTopChildUnder((<span class="keyword">int</span>) x, (<span class="keyword">int</span>) y);</div><div class="line">                <span class="keyword">final</span> <span class="keyword">boolean</span> pastSlop = toCapture != <span class="keyword">null</span> &amp;&amp; checkTouchSlop(toCapture, dx, dy);</div><div class="line">                <span class="keyword">if</span> (pastSlop) &#123;</div><div class="line">                    <span class="comment">// check the callback's</span></div><div class="line">                    <span class="comment">// getView[Horizontal|Vertical]DragRange methods to know</span></div><div class="line">                    <span class="comment">// if you can move at all along an axis, then see if it</span></div><div class="line">                    <span class="comment">// would clamp to the same value. If you can't move at</span></div><div class="line">                    <span class="comment">// all in every dimension with a nonzero range, bail.</span></div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> oldLeft = toCapture.getLeft();</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> targetLeft = oldLeft + (<span class="keyword">int</span>) dx;</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> newLeft = mCallback.clampViewPositionHorizontal(toCapture,</div><div class="line">                            targetLeft, (<span class="keyword">int</span>) dx);</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> oldTop = toCapture.getTop();</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> targetTop = oldTop + (<span class="keyword">int</span>) dy;</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> newTop = mCallback.clampViewPositionVertical(toCapture, targetTop,</div><div class="line">                            (<span class="keyword">int</span>) dy);</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> horizontalDragRange = mCallback.getViewHorizontalDragRange(</div><div class="line">                                toCapture);</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> verticalDragRange = mCallback.getViewVerticalDragRange(toCapture);</div><div class="line">                    <span class="keyword">if</span> ((horizontalDragRange == <span class="number">0</span> || horizontalDragRange &gt; <span class="number">0</span></div><div class="line">                            &amp;&amp; newLeft == oldLeft) &amp;&amp; (verticalDragRange == <span class="number">0</span></div><div class="line">                                || verticalDragRange &gt; <span class="number">0</span> &amp;&amp; newTop == oldTop)) &#123;</div><div class="line">                       <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                reportNewEdgeDrags(dx, dy, pointerId);</div><div class="line">                <span class="keyword">if</span> (mDragState == STATE_DRAGGING) &#123;</div><div class="line">                    <span class="comment">// Callback might have started an edge drag</span></div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (pastSlop &amp;&amp; tryCaptureViewForDrag(toCapture, pointerId)) &#123;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            saveLastMotion(ev);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> MotionEventCompat.ACTION_POINTER_UP: &#123;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> pointerId = MotionEventCompat.getPointerId(ev, actionIndex);</div><div class="line">            clearMotionHistory(pointerId);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_CANCEL: &#123;</div><div class="line">            cancel();</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> mDragState == STATE_DRAGGING;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>findTopChildUnder</code>:在父View的坐标系统下，根据给定的坐标找到最顶层的子View。子View的顺序是由<code>getOrderedChildIndex(int)</code>来决定的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">  * Find the topmost child under the given point within the parent view's coordinate system.</div><div class="line">  * The child order is determined using &#123;<span class="doctag">@link</span> Callback#getOrderedChildIndex(int)&#125;.</div><div class="line">  *</div><div class="line">  * <span class="doctag">@param</span> x X position to test in the parent's coordinate system</div><div class="line">  * <span class="doctag">@param</span> y Y position to test in the parent's coordinate system</div><div class="line">  * <span class="doctag">@return</span> The topmost child view under (x, y) or null if none found.</div><div class="line">  */</div><div class="line"><span class="function"><span class="keyword">public</span> View <span class="title">findTopChildUnder</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> childCount = mParentView.getChildCount();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = childCount - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">        <span class="keyword">final</span> View child = mParentView.getChildAt(mCallback.getOrderedChildIndex(i));</div><div class="line">        <span class="keyword">if</span> (x &gt;= child.getLeft() &amp;&amp; x &lt; child.getRight() &amp;&amp;</div><div class="line">                   y &gt;= child.getTop() &amp;&amp; y &lt; child.getBottom()) &#123;</div><div class="line">            <span class="keyword">return</span> child;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如上，当同一位置有2个子View重叠，想要让下层的子View被选中， 那么就要实现Callback里的<code>getOrderedChildIndex(int index)</code>方法来改变查找子View的顺序:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getOrderedChildIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> indexTop = mParentView.indexOfChild(topView);</div><div class="line">	<span class="keyword">int</span> indexBottom = mParentView.indexOfChild(bottomView);</div><div class="line">	<span class="keyword">if</span> (index == indexTop) &#123;</div><div class="line">		<span class="keyword">return</span> indexBottom;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> index;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>ACTION_DOWN事件的处理</code>:<br><code>ACTION_DOWN</code>部分处理完了，跳过switch语句块，剩下的代码就只有<code>return mDragState == STATE_DRAGGING;</code>。在<code>ACTION_DOWN</code>部分没有对<code>mDragState</code>进行赋值，其默认值为<code>STATE_IDLE</code>，所以此处返回false,接下来会调用每个子View 的<code>dispatchTouchEvent()</code>方法，<code>dispatchTouchEvent</code>里一般又会调用<code>onTouchEvent()</code>。</li>
+</ul>
+<p><strong>情形一</strong>：如果没有子View消费这次事件（子View的dispatchTouchEvent()返回都是false），会调用mParentView的super.dispatchTouchEvent (ev)，即View中的dispatchTouchEvent(ev)，然后调用mParentView的onTouchEvent()方法， 再调用ViewDragHelper的processTouchEvent(MotionEvent ev)方法。此时（ACTION_DOWN事件发生时）mParentView的onTouchEvent()要返回true， onTouchEvent()才能继续接受到接下来的ACTION_MOVE、ACTION_UP等事件，否则无法完成拖动（除了ACTION_DOWN外的其他事件发生时返回true或false都 不会影响接下来的事件接受），因为拖动的相关代码是写在processTouchEvent()里的ACTION_MOVE部分的。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Process a touch event received by the parent view. This method will dispatch callback events</div><div class="line"> * as needed before returning. The parent view's onTouchEvent implementation should call this.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> ev The touch event received by the parent view</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">processTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> action = MotionEventCompat.getActionMasked(ev);</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> actionIndex = MotionEventCompat.getActionIndex(ev);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (action == MotionEvent.ACTION_DOWN) &#123;</div><div class="line">        <span class="comment">// Reset things for a new event stream, just in case we didn't get</span></div><div class="line">        <span class="comment">// the whole previous stream.</span></div><div class="line">        cancel();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (mVelocityTracker == <span class="keyword">null</span>) &#123;</div><div class="line">        mVelocityTracker = VelocityTracker.obtain();</div><div class="line">    &#125;</div><div class="line">    mVelocityTracker.addMovement(ev);</div><div class="line"></div><div class="line">    <span class="keyword">switch</span> (action) &#123;</div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_DOWN: &#123;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">float</span> x = ev.getX();</div><div class="line">            <span class="keyword">final</span> <span class="keyword">float</span> y = ev.getY();</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> pointerId = MotionEventCompat.getPointerId(ev, <span class="number">0</span>);</div><div class="line">            <span class="keyword">final</span> View toCapture = findTopChildUnder((<span class="keyword">int</span>) x, (<span class="keyword">int</span>) y);</div><div class="line"></div><div class="line">            saveInitialMotion(x, y, pointerId);</div><div class="line"></div><div class="line">            <span class="comment">// Since the parent is already directly processing this touch event,</span></div><div class="line">            <span class="comment">// there is no reason to delay for a slop before dragging.</span></div><div class="line">            <span class="comment">// Start immediately if possible.</span></div><div class="line">            tryCaptureViewForDrag(toCapture, pointerId);</div><div class="line"></div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> edgesTouched = mInitialEdgesTouched[pointerId];</div><div class="line">            <span class="keyword">if</span> ((edgesTouched &amp; mTrackingEdges) != <span class="number">0</span>) &#123;</div><div class="line">                mCallback.onEdgeTouched(edgesTouched &amp; mTrackingEdges, pointerId);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// ...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在<code>processTouchEvent</code>中的处理和<code>shouldInterceptTouchEvent()</code>里<code>ACTION_DOWN</code>那部分基本一致，唯一区别就是这里没有约束条件直接调用了<code>tryCaptureViewForDrag()</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Attempt to capture the view with the given pointer ID. The callback will be involved.</div><div class="line"> * This will put us into the "dragging" state. If we've already captured this view with</div><div class="line"> * this pointer this method will immediately return true without consulting the callback.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> toCapture View to capture</div><div class="line"> * <span class="doctag">@param</span> pointerId Pointer to capture with</div><div class="line"> * <span class="doctag">@return</span> true if capture was successful</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">tryCaptureViewForDrag</span><span class="params">(View toCapture, <span class="keyword">int</span> pointerId)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (toCapture == mCapturedView &amp;&amp; mActivePointerId == pointerId) &#123;</div><div class="line">        <span class="comment">// Already done!</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 在tryCaptureView()中决定是否需要拖动当前触摸到的View</span></div><div class="line">    <span class="keyword">if</span> (toCapture != <span class="keyword">null</span> &amp;&amp; mCallback.tryCaptureView(toCapture, pointerId)) &#123;</div><div class="line">        mActivePointerId = pointerId;</div><div class="line">        captureChildView(toCapture, pointerId);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在<code>tryCaptureViewForDrag()</code>方法中，调用了<code>mCallback.tryCaptureView(toCapture, pointerId)</code>来决定是否需要拖动当前触摸到的View，若<code>tryCaptureView</code>返回true，，紧接着就调用了<code>captureChildView(toCapture, pointerId);</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">     * Capture a specific child view for dragging within the parent. The callback will be notified</div><div class="line">     * but &#123;<span class="doctag">@link</span> Callback#tryCaptureView(android.view.View, int)&#125; will not be asked permission to</div><div class="line">     * capture this view.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> childView Child view to capture</div><div class="line">     * <span class="doctag">@param</span> activePointerId ID of the pointer that is dragging the captured child view</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">captureChildView</span><span class="params">(View childView, <span class="keyword">int</span> activePointerId)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (childView.getParent() != mParentView) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"captureChildView: parameter must be a descendant "</span> +</div><div class="line">                    <span class="string">"of the ViewDragHelper's tracked parent view ("</span> + mParentView + <span class="string">")"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        mCapturedView = childView;</div><div class="line">        mActivePointerId = activePointerId;</div><div class="line">        mCallback.onViewCaptured(childView, activePointerId);</div><div class="line">        setDragState(STATE_DRAGGING);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>如上，在<code>captureChildView(toCapture, pointerId)</code>中记录下将要拖动的View和触摸的手指编号，并调用Callback的<code>onViewCaptured(childView, activePointerId)</code>通知外部有子View被捕获到了， 再调用<code>setDragState()</code>设置当前的状态为<code>STATE_DRAGGING</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setDragState</span><span class="params">(<span class="keyword">int</span> state)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mDragState != state) &#123;</div><div class="line">            mDragState = state;</div><div class="line">            <span class="comment">// 状态改变后会调用Callback的onViewDragStateChanged()通知状态的变化</span></div><div class="line">            mCallback.onViewDragStateChanged(state);</div><div class="line">            <span class="keyword">if</span> (mDragState == STATE_IDLE) &#123;</div><div class="line">                mCapturedView = <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>假设ACTION_DOWN发生后在mParentView的onTouchEvent()返回了true，接下来就会执行ACTION_MOVE部分：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">processTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line"></div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE: &#123;</div><div class="line">                <span class="keyword">if</span> (mDragState == STATE_DRAGGING) &#123;</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> index = MotionEventCompat.findPointerIndex(ev, mActivePointerId);</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">float</span> x = MotionEventCompat.getX(ev, index);</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">float</span> y = MotionEventCompat.getY(ev, index);</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> idx = (<span class="keyword">int</span>) (x - mLastMotionX[mActivePointerId]);</div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> idy = (<span class="keyword">int</span>) (y - mLastMotionY[mActivePointerId]);</div><div class="line"></div><div class="line">                    dragTo(mCapturedView.getLeft() + idx, mCapturedView.getTop() + idy, idx, idy);</div><div class="line"></div><div class="line">                    saveLastMotion(ev);</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="comment">// Check to see if any pointer is now over a draggable view.</span></div><div class="line">                    <span class="keyword">final</span> <span class="keyword">int</span> pointerCount = MotionEventCompat.getPointerCount(ev);</div><div class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pointerCount; i++) &#123;</div><div class="line">                        <span class="keyword">final</span> <span class="keyword">int</span> pointerId = MotionEventCompat.getPointerId(ev, i);</div><div class="line">                        <span class="keyword">final</span> <span class="keyword">float</span> x = MotionEventCompat.getX(ev, i);</div><div class="line">                        <span class="keyword">final</span> <span class="keyword">float</span> y = MotionEventCompat.getY(ev, i);</div><div class="line">                        <span class="keyword">final</span> <span class="keyword">float</span> dx = x - mInitialMotionX[pointerId];</div><div class="line">                        <span class="keyword">final</span> <span class="keyword">float</span> dy = y - mInitialMotionY[pointerId];</div><div class="line"></div><div class="line">                        reportNewEdgeDrags(dx, dy, pointerId);</div><div class="line">                        <span class="keyword">if</span> (mDragState == STATE_DRAGGING) &#123;</div><div class="line">                            <span class="comment">// Callback might have started an edge drag.</span></div><div class="line">                            <span class="keyword">break</span>;</div><div class="line">                        &#125;</div><div class="line"></div><div class="line">                        <span class="keyword">final</span> View toCapture = findTopChildUnder((<span class="keyword">int</span>) x, (<span class="keyword">int</span>) y);</div><div class="line">                        <span class="keyword">if</span> (checkTouchSlop(toCapture, dx, dy) &amp;&amp;</div><div class="line">                                tryCaptureViewForDrag(toCapture, pointerId)) &#123;</div><div class="line">                            <span class="keyword">break</span>;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    saveLastMotion(ev);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">//...</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>如上，这部分代码首先会判断<code>mDragState</code>的状态，如果之前在<code>ACTION_DOWN</code>中捕获到了要拖动的View，那么就执行if里面的代码，如果没有捕获到，就执行else里面的代码，这里还有两个方法涉及到了Callback里的方法，需要来解析一下， 分别是<code>reportNewEdgeDrags()</code>和<code>checkTouchSlop()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">reportNewEdgeDrags</span><span class="params">(<span class="keyword">float</span> dx, <span class="keyword">float</span> dy, <span class="keyword">int</span> pointerId)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> dragsStarted = <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span> (checkNewEdgeDrag(dx, dy, pointerId, EDGE_LEFT)) &#123;</div><div class="line">        dragsStarted |= EDGE_LEFT;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (checkNewEdgeDrag(dy, dx, pointerId, EDGE_TOP)) &#123;</div><div class="line">        dragsStarted |= EDGE_TOP;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (checkNewEdgeDrag(dx, dy, pointerId, EDGE_RIGHT)) &#123;</div><div class="line">        dragsStarted |= EDGE_RIGHT;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (checkNewEdgeDrag(dy, dx, pointerId, EDGE_BOTTOM)) &#123;</div><div class="line">        dragsStarted |= EDGE_BOTTOM;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (dragsStarted != <span class="number">0</span>) &#123;</div><div class="line">        mEdgeDragsInProgress[pointerId] |= dragsStarted;</div><div class="line">        mCallback.onEdgeDragStarted(dragsStarted, pointerId);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里对四个边缘都做了一次检查，检查是否在某些边缘产生拖动了，如果有拖动，就将有拖动的边缘记录在mEdgeDragsInProgress中，再调用Callback的onEdgeDragStarted(int edgeFlags, int pointerId)通知某个边缘开始产生拖动了。虽然reportNewEdgeDrags()会被调用很多次（因为processTouchEvent()的ACTION_MOVE部分会执行很多次）， 但mCallback.onEdgeDragStarted(dragsStarted, pointerId)只会调用一次，具体的要看checkNewEdgeDrag()这个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">checkNewEdgeDrag</span><span class="params">(<span class="keyword">float</span> delta, <span class="keyword">float</span> odelta, <span class="keyword">int</span> pointerId, <span class="keyword">int</span> edge)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">float</span> absDelta = Math.abs(delta);</div><div class="line">    <span class="keyword">final</span> <span class="keyword">float</span> absODelta = Math.abs(odelta);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ((mInitialEdgesTouched[pointerId] &amp; edge) != edge  || (mTrackingEdges &amp; edge) == <span class="number">0</span> ||</div><div class="line">            (mEdgeDragsLocked[pointerId] &amp; edge) == edge ||</div><div class="line">            (mEdgeDragsInProgress[pointerId] &amp; edge) == edge ||</div><div class="line">            (absDelta &lt;= mTouchSlop &amp;&amp; absODelta &lt;= mTouchSlop)) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (absDelta &lt; absODelta * <span class="number">0.5f</span> &amp;&amp; mCallback.onEdgeLock(edge)) &#123;</div><div class="line">        mEdgeDragsLocked[pointerId] |= edge;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> (mEdgeDragsInProgress[pointerId] &amp; edge) == <span class="number">0</span> &amp;&amp; absDelta &gt; mTouchSlop;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/View/" rel="tag"># View</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/31/Notes-of-Hacking-with-Swift/" rel="next" title="Notes of Hacking with Swift">
+                <i class="fa fa-chevron-left"></i> Notes of Hacking with Swift
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/20/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/24/ViewDragHelper你需要知道的一切/"
+           data-title="ViewDragHelper你需要知道的一切" data-url="http://yoursite.com/2016/06/24/ViewDragHelper你需要知道的一切/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Brand Lee" />
+          <p class="site-author-name" itemprop="name">Brand Lee</p>
+           
+              <p class="site-description motion-element" itemprop="description">brandlee's blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/brandlee" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2208243610" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几点说明"><span class="nav-number">2.</span> <span class="nav-text">几点说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用示例"><span class="nav-number">3.</span> <span class="nav-text">使用示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义ViewGroup"><span class="nav-number">3.1.</span> <span class="nav-text">自定义ViewGroup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#功能展示"><span class="nav-number">3.2.</span> <span class="nav-text">功能展示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效果演示"><span class="nav-number">3.3.</span> <span class="nav-text">效果演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冲突事件处理"><span class="nav-number">3.4.</span> <span class="nav-text">冲突事件处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">4.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ViewDragHelper实例的创建"><span class="nav-number">4.1.</span> <span class="nav-text">ViewDragHelper实例的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对Touch事件的处理"><span class="nav-number">4.2.</span> <span class="nav-text">对Touch事件的处理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Brand Lee</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"brandlee"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
