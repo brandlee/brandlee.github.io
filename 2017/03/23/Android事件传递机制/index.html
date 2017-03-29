@@ -98,7 +98,7 @@
 <meta property="og:image" content="https://ww3.sinaimg.cn/large/006tKfTcly1fdxxznxlkzj31060n8tbd.jpg">
 <meta property="og:image" content="http://yoursite.com/Users/admin/Desktop/ViewDispatch_2.png">
 <meta property="og:image" content="http://yoursite.com/Users/admin/Desktop/ViewDispatch_03.png">
-<meta property="og:updated_time" content="2017-03-29T07:31:12.000Z">
+<meta property="og:updated_time" content="2017-03-29T07:33:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android事件传递机制">
 <meta name="twitter:description" content="Android事件传递机制一直都是一个痛点，希望这篇文章能够给你点不一样的
@@ -511,7 +511,7 @@
 <p>因此如果你有一个控件是非enable的，那么给它注册<code>onTouch</code>事件将不会执行。</p>
 </li>
 </ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<h2 id="应用场景—滑动冲突的解决"><a href="#应用场景—滑动冲突的解决" class="headerlink" title="应用场景—滑动冲突的解决"></a>应用场景—滑动冲突的解决</h2><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="http://www.jianshu.com/p/e99b5e8bd67b" target="_blank" rel="external">图解Android事件分发机制</a></li>
 <li><a href="http://www.jianshu.com/p/38015afcdb58#" target="_blank" rel="external">Android事件分发机制详解：史上最全面、最易懂</a></li>
 <li>Android开发艺术探索</li>
@@ -710,7 +710,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">2.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity的事件分发机制"><span class="nav-number">2.1.</span> <span class="nav-text">Activity的事件分发机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ViewGroup的事件分发机制"><span class="nav-number">2.2.</span> <span class="nav-text">ViewGroup的事件分发机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#View的事件分发机制"><span class="nav-number">2.3.</span> <span class="nav-text">View的事件分发机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶"><span class="nav-number">3.</span> <span class="nav-text">进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACTION-MOVE和ACTION-UP相关"><span class="nav-number">3.1.</span> <span class="nav-text">ACTION_MOVE和ACTION_UP相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onTouch-和onTouchEvent-的区别"><span class="nav-number">3.2.</span> <span class="nav-text">onTouch()和onTouchEvent()的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">2.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity的事件分发机制"><span class="nav-number">2.1.</span> <span class="nav-text">Activity的事件分发机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ViewGroup的事件分发机制"><span class="nav-number">2.2.</span> <span class="nav-text">ViewGroup的事件分发机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#View的事件分发机制"><span class="nav-number">2.3.</span> <span class="nav-text">View的事件分发机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶"><span class="nav-number">3.</span> <span class="nav-text">进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACTION-MOVE和ACTION-UP相关"><span class="nav-number">3.1.</span> <span class="nav-text">ACTION_MOVE和ACTION_UP相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onTouch-和onTouchEvent-的区别"><span class="nav-number">3.2.</span> <span class="nav-text">onTouch()和onTouchEvent()的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用场景—滑动冲突的解决"><span class="nav-number">4.</span> <span class="nav-text">应用场景—滑动冲突的解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
