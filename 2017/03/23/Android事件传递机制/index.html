@@ -96,9 +96,9 @@
 <meta property="og:description" content="Android事件传递机制一直都是一个痛点，希望这篇文章能够给你点不一样的
 基础知识—&amp;gt;源码分析—&amp;gt;进阶—&amp;gt;应用场景">
 <meta property="og:image" content="https://ww3.sinaimg.cn/large/006tKfTcly1fdxxznxlkzj31060n8tbd.jpg">
-<meta property="og:image" content="http://yoursite.com/Users/admin/Desktop/ViewDispatch_2.png">
-<meta property="og:image" content="http://yoursite.com/Users/admin/Desktop/ViewDispatch_03.png">
-<meta property="og:updated_time" content="2017-03-29T07:33:49.000Z">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/006tNc79ly1fe3r085hd8j316e0c4q4w.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/006tNc79ly1fe3r090ayaj316e0bqmyt.jpg">
+<meta property="og:updated_time" content="2017-03-29T07:36:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android事件传递机制">
 <meta name="twitter:description" content="Android事件传递机制一直都是一个痛点，希望这篇文章能够给你点不一样的
@@ -479,10 +479,10 @@
 <h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><h3 id="ACTION-MOVE和ACTION-UP相关"><a href="#ACTION-MOVE和ACTION-UP相关" class="headerlink" title="ACTION_MOVE和ACTION_UP相关"></a>ACTION_MOVE和ACTION_UP相关</h3><p>先来看看两个实验：</p>
 <ol>
 <li><p>在View的<code>dispatchTouchEvent</code> 返回<strong>false</strong>并且在<code>ViewGroup</code>的<code>onTouchEvent</code>返回<strong>true</strong><br>红色的箭头代表<code>ACTION_DOWN</code>事件的流向<br>蓝色的箭头代表<code>ACTION_MOVE</code> 和 <code>ACTION_UP</code>事件的流向</p>
-<p><img src="/Users/admin/Desktop/ViewDispatch_2.png" alt="ViewDispatch_2"></p>
+<p><img src="https://ww1.sinaimg.cn/large/006tNc79ly1fe3r085hd8j316e0c4q4w.jpg" alt="ViewDispatch_2"></p>
 </li>
 <li><p>在<code>ViewGroup</code>  的<code>onTouchEvent</code> 返回<strong>true</strong><br>红色的箭头代表ACTION_DOWN 事件的流向<br>蓝色的箭头代表ACTION_MOVE 和 ACTION_UP 事件的流向</p>
-<p><img src="/Users/admin/Desktop/ViewDispatch_03.png" alt="ViewDispatch_03"></p>
+<p><img src="https://ww2.sinaimg.cn/large/006tNc79ly1fe3r090ayaj316e0bqmyt.jpg" alt="ViewDispatch_03"></p>
 </li>
 </ol>
 <p>总结一下：</p>
